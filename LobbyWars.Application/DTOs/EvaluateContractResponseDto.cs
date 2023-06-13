@@ -1,8 +1,8 @@
-﻿namespace LobbyWars.Application.DTOs.Contracts
+﻿namespace LobbyWars.Application.DTOs
 {
-    public class ContractResponseDto
+    public class EvaluateContractResponseDto
     {
-        public ContractResponseDto(string winner, char? missingSignatures)
+        public EvaluateContractResponseDto(string winner, char? missingSignatures)
         {
             Winner = winner;
             MissingSignatures = missingSignatures;

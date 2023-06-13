@@ -1,5 +1,4 @@
-﻿using LobbyWars.Application.DTOs.Contracts;
-using LobbyWars.Application.Interfaces;
+﻿using LobbyWars.Application.DTOs;
 using LobbyWars.Domain.Entities;
 using LobbyWars.SharedKernel.Constants;
 using System;
@@ -13,13 +12,12 @@ namespace LobbyWars.Application.Services
 {
     public class ContractService : IContractService
     {
-        public async Task<ContractResponseDto> EvaluateContracts(ContractEntity contract)
+        public async Task<EvaluateContractResponseDto> EvaluateContracts(Domain.Entities.Contract contract)
         {
-            //contract.Validate();
             var winner = await contract.DetermineWinner();
             var missingSignatures = await contract.DetermineMissingSignatures();
 
-            return new ContractResponseDto(winner: winner, missingSignatures: missingSignatures);
+            return new EvaluateContractResponseDto(winner: winner, missingSignatures: missingSignatures);
         }
     }
 }

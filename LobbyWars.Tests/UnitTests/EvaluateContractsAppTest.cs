@@ -1,5 +1,4 @@
 ﻿using LobbyWars.API.Features.Commands;
-using LobbyWars.Application.DTOs.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +12,8 @@ using System.Reflection;
 using LobbyWars.SharedKernel.Constants;
 using System.Net;
 using Microsoft.AspNetCore.Mvc.Testing;
-using LobbyWars.Application.Interfaces;
-using LobbyWars.Application.Services;
 using LobbyWars.Domain.Entities;
+using LobbyWars.Application.Services;
 
 namespace LobbyWars.Tests.UnitTests
 {
@@ -33,7 +31,7 @@ namespace LobbyWars.Tests.UnitTests
         [Test]
         public void TestContractWinnerDetermination_WhenContract1Wins()
         {
-            var value = new ContractEntity("NNV", "KNV");
+            var value = new Domain.Entities.Contract("NNV", "KNV");
 
             var result = _service.EvaluateContracts(value).Result;
 
@@ -44,7 +42,7 @@ namespace LobbyWars.Tests.UnitTests
         [Test]
         public void TestContractWinnerDetermination_WhenContract2Wins()
         {
-            var value = new ContractEntity("KNV", "NNV");
+            var value = new Domain.Entities.Contract("KNV", "NNV");
 
             var result = _service.EvaluateContracts(value).Result;
 
@@ -55,7 +53,7 @@ namespace LobbyWars.Tests.UnitTests
         [Test]
         public void TestContractWinnerDetermination_WhenTie()
         {
-            var value = new ContractEntity("KNV", "KNV");
+            var value = new Domain.Entities.Contract("KNV", "KNV");
 
             var result = _service.EvaluateContracts(value).Result;
 
@@ -69,7 +67,7 @@ namespace LobbyWars.Tests.UnitTests
         [Test]
         public void TestMinimumSignatureDetermination_WhenNotaryIsRequired()
         {
-            var value = new ContractEntity("N#V", "NVV");
+            var value = new Domain.Entities.Contract("N#V", "NVV");
 
             var result = _service.EvaluateContracts(value).Result;
 
@@ -80,7 +78,7 @@ namespace LobbyWars.Tests.UnitTests
         [Test]
         public void TestMinimumSignatureDetermination_WhenKingIsRequired()
         {
-            var value = new ContractEntity("V#V", "NVV");
+            var value = new Domain.Entities.Contract("V#V", "NVV");
 
             var result = _service.EvaluateContracts(value).Result;
 
@@ -91,7 +89,7 @@ namespace LobbyWars.Tests.UnitTests
         [Test]
         public void TestMinimumSignatureDetermination_WhenValidatorIsRequired()
         {
-            var value = new ContractEntity("NN#", "NVV");
+            var value = new Domain.Entities.Contract("NN#", "NVV");
 
             var result = _service.EvaluateContracts(value).Result;
 
@@ -102,7 +100,7 @@ namespace LobbyWars.Tests.UnitTests
         [Test]
         public void TestMinimumSignatureDetermination_WhenNoSignatureIsRequired()
         {
-            var value = new ContractEntity("KN#", "NVV");
+            var value = new Domain.Entities.Contract("KN#", "NVV");
 
             var result = _service.EvaluateContracts(value).Result;
 

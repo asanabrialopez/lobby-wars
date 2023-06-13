@@ -2,10 +2,11 @@
 using Carter.ModelBinding;
 using FluentValidation;
 using LobbyWars.API.Features.EventHandler;
-using LobbyWars.Application.DTOs.Contracts;
-using LobbyWars.Application.Interfaces;
+using LobbyWars.Application.DTOs;
+using LobbyWars.Application.Services;
 using LobbyWars.Domain.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -17,14 +18,14 @@ namespace LobbyWars.API.Features.Commands
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapPost("api/contract", async (IMediator mediator, EvaluateContractCommand command) =>
+            app.MapPost("api/contract", [Authorize] async (IMediator mediator, EvaluateContractCommand command) =>
             {
                 return await mediator.Send(command);
             })
             .WithName(nameof(EvaluateContracts))
-            .WithTags(nameof(ContractEntity))
+            .WithTags(nameof(Domain.Entities.Contract))
             .ProducesValidationProblem()
-            .Produces<ContractResponseDto>(StatusCodes.Status200OK)
+            .Produces<EvaluateContractResponseDto>(StatusCodes.Status200OK)
             .ProducesValidationProblem();
         }
 
@@ -44,9 +45,9 @@ namespace LobbyWars.API.Features.Commands
             /// Method to convert the DTO to a domain entity
             /// </summary>
             /// <returns></returns>
-            public ContractEntity ToDomainEntity()
+            public Domain.Entities.Contract ToDomainEntity()
             {
-                return new ContractEntity(PlaintiffSignatures, DefendantSignatures);
+                return new Domain.Entities.Contract(PlaintiffSignatures, DefendantSignatures);
             }
         }
 

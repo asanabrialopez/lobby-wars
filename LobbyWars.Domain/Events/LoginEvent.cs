@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace LobbyWars.Domain.Events
 {
-    public class EvaluatedContractEvent : DomainEvent
+    public class LoginEvent : DomainEvent
     {
-        public EvaluatedContractEvent(Contract enttity)
+        public LoginEvent(User user)
         {
-            Contract = enttity;
+            User = user;
         }
 
-        public Contract Contract { get; }
+        public User User { get; }
     }
 }

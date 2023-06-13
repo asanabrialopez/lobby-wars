@@ -1,5 +1,5 @@
 ﻿using LobbyWars.API.Features.Commands;
-using LobbyWars.Application.DTOs.Contracts;
+using LobbyWars.Application.DTOs;
 using LobbyWars.SharedKernel.Constants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -35,7 +35,7 @@ namespace LobbyWars.Tests.IntegrationTests
 
             // Assert
             postResponse.EnsureSuccessStatusCode();
-            var result = postResponse.Content.ReadFromJsonAsync<ContractResponseDto>().Result;
+            var result = postResponse.Content.ReadFromJsonAsync<EvaluateContractResponseDto>().Result;
             Assert.AreEqual(ContractConstants.DEFENDANT, result.Winner);
         }
 
@@ -50,7 +50,7 @@ namespace LobbyWars.Tests.IntegrationTests
 
             // Assert
             postResponse.EnsureSuccessStatusCode();
-            var result = postResponse.Content.ReadFromJsonAsync<ContractResponseDto>().Result;
+            var result = postResponse.Content.ReadFromJsonAsync<EvaluateContractResponseDto>().Result;
             Assert.AreEqual(ContractConstants.PLAINTIFF, result.Winner);
         }
 
@@ -65,7 +65,7 @@ namespace LobbyWars.Tests.IntegrationTests
 
             // Assert
             postResponse.EnsureSuccessStatusCode();
-            var result = postResponse.Content.ReadFromJsonAsync<ContractResponseDto>().Result;
+            var result = postResponse.Content.ReadFromJsonAsync<EvaluateContractResponseDto>().Result;
 
             // The method returns null in case of a tie.
             Assert.Null(result.Winner);
@@ -82,7 +82,7 @@ namespace LobbyWars.Tests.IntegrationTests
 
             // Assert
             postResponse.EnsureSuccessStatusCode();
-            var result = postResponse.Content.ReadFromJsonAsync<ContractResponseDto>().Result;
+            var result = postResponse.Content.ReadFromJsonAsync<EvaluateContractResponseDto>().Result;
             Assert.AreEqual(ContractConstants.NOTARY, result.MissingSignatures);
         }
 
@@ -97,7 +97,7 @@ namespace LobbyWars.Tests.IntegrationTests
 
             // Assert
             postResponse.EnsureSuccessStatusCode();
-            var result = postResponse.Content.ReadFromJsonAsync<ContractResponseDto>().Result;
+            var result = postResponse.Content.ReadFromJsonAsync<EvaluateContractResponseDto>().Result;
             Assert.AreEqual(ContractConstants.KING, result.MissingSignatures);
         }
 
@@ -112,7 +112,7 @@ namespace LobbyWars.Tests.IntegrationTests
 
             // Assert
             postResponse.EnsureSuccessStatusCode();
-            var result = postResponse.Content.ReadFromJsonAsync<ContractResponseDto>().Result;
+            var result = postResponse.Content.ReadFromJsonAsync<EvaluateContractResponseDto>().Result;
             Assert.AreEqual(ContractConstants.VALIDATOR, result.MissingSignatures);
         }
 
@@ -127,7 +127,7 @@ namespace LobbyWars.Tests.IntegrationTests
 
             // Assert
             postResponse.EnsureSuccessStatusCode();
-            var result = postResponse.Content.ReadFromJsonAsync<ContractResponseDto>().Result;
+            var result = postResponse.Content.ReadFromJsonAsync<EvaluateContractResponseDto>().Result;
 
             // The method returns null if no signature is required.
             Assert.Null(result.MissingSignatures);

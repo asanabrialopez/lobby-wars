@@ -11,14 +11,12 @@ using System.Xml.Linq;
 
 namespace LobbyWars.Domain.Entities
 {
-    public class ContractEntity : IHasDomainEvent
+    public class Contract : IEntity
     {
-        public ContractEntity(string plaintiffSignatures, string defendantSignatures)
+        public Contract(string plaintiffSignatures, string defendantSignatures)
         {
             PlaintiffSignatures = plaintiffSignatures;
             DefendantSignatures = defendantSignatures;
-
-            DomainEvents.Add(new EvaluatedContractEvent(this));
         }
 
         /// <summary>
@@ -34,15 +32,7 @@ namespace LobbyWars.Domain.Entities
         public int GetScorePlaintiff => CalculatePoints(PlaintiffSignatures);
         public int GetScoreDefendant => CalculatePoints(DefendantSignatures);
 
-        public List<DomainEvent> DomainEvents { get; set; } = new List<DomainEvent>();
-
-        //public void Validate()
-        //{
-        //    if (PlaintiffSignatures.Contains("#") && DefendantSignatures.Contains("#"))
-        //        throw new ValidationException("Only one sign can be missing");
-        //    if (PlaintiffSignatures.Length!=3 && DefendantSignatures.Length != 3)
-        //        throw new ValidationException("Signs must have 3 managers");
-        //}
+        public int Id { get; set; }
 
         /// <summary>
         /// Determines the winner of a contract based on the points of the plaintiff's and defendant's signatures.
