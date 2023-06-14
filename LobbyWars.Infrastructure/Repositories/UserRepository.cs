@@ -1,12 +1,9 @@
 ﻿using LobbyWars.Domain.Entities;
-using LobbyWars.Domain.Repositories;
 using LobbyWars.Infrastructure.Database;
 using LobbyWars.Infrastructure.Repositories;
 using LobbyWars.SharedKernel;
 using LobbyWars.SharedKernel.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace LobbyWars.Domain.Repositories
 {
@@ -35,6 +32,14 @@ namespace LobbyWars.Domain.Repositories
             return await _dbContext.Set<User>()
                         .AsNoTracking()
                         .FirstOrDefaultAsync(e => e.Email == email);
+        }
+
+        public async void SetLastLogin(string email)
+        {
+            var user = GetByEmail(email).Result;
+            user.LastLogin = DateTime.Now;
+            if (user != null)
+                Update(user.Id, user);
         }
     }
 }

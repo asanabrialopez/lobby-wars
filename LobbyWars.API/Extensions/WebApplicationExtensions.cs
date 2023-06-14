@@ -1,7 +1,15 @@
 ﻿namespace LobbyWars.API.Extensions
 {
+    /// <summary>
+    /// This class holds extension methods for the WebApplication type.
+    /// </summary>
     public static class WebApplicationExtensions
     {
+        /// <summary>
+        /// Extension method to add Swagger to a WebApplication instance.
+        /// </summary>
+        /// <param name="app">Web application used to configure the HTTP pipeline, and routes.</param>
+        /// <returns>Return the modified WebApplication instance.</returns>
         public static WebApplication MapSwagger(this WebApplication app)
         {
             app.UseSwagger();

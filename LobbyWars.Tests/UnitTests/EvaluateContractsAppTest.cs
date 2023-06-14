@@ -1,18 +1,4 @@
-﻿using LobbyWars.API.Features.Commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
-using FluentAssertions;
-using FluentValidation.TestHelper;
-using System.Diagnostics.Contracts;
-using System.Reflection;
-using LobbyWars.SharedKernel.Constants;
-using System.Net;
-using Microsoft.AspNetCore.Mvc.Testing;
-using LobbyWars.Domain.Entities;
+﻿using LobbyWars.SharedKernel.Constants;
 using LobbyWars.Application.Services;
 
 namespace LobbyWars.Tests.UnitTests
@@ -58,8 +44,6 @@ namespace LobbyWars.Tests.UnitTests
             var result = _service.EvaluateContracts(value).Result;
 
             // Assert
-
-
             // The method returns null in case of a tie.
             Assert.Null(result.Winner);
         }

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LobbyWars.Application.DTOs
+﻿namespace LobbyWars.Application.DTOs
 {
+    /// <summary>
+    /// This class is a Data Transfer Object (DTO) used to encapsulate data for the response to a login request.
+    /// </summary>
     public class LoginResponseDto
     {
         public LoginResponseDto(string? accessToken) 
@@ -13,6 +10,9 @@ namespace LobbyWars.Application.DTOs
             AccessToken = accessToken;
         }
 
+        /// <summary>
+        /// The access token property, nullable string.
+        /// </summary>
         public string? AccessToken { get; set; }
     }
 }

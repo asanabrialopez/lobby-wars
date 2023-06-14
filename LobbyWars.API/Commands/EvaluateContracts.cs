@@ -1,21 +1,22 @@
 ﻿using Carter;
 using Carter.ModelBinding;
 using FluentValidation;
-using LobbyWars.API.Features.EventHandler;
 using LobbyWars.Application.DTOs;
 using LobbyWars.Application.Services;
-using LobbyWars.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System.Diagnostics.Contracts;
 
 namespace LobbyWars.API.Features.Commands
 {
+    /// <summary>
+    /// This class is a module that implements ICarterModule to provide routes for evaluate contracts.
+    /// </summary>
     public class EvaluateContracts : ICarterModule
     {
+        /// <summary>
+        /// Method to add routes to the WebApplication instance.
+        /// </summary>
+        /// <param name="app">WebApplication instance.</param>
         public void AddRoutes(IEndpointRouteBuilder app)
         {
             app.MapPost("api/contract", [Authorize] async (IMediator mediator, EvaluateContractCommand command) =>
@@ -29,6 +30,9 @@ namespace LobbyWars.API.Features.Commands
             .ProducesValidationProblem();
         }
 
+        /// <summary>
+        /// This class represents a command for evaluating a contract.
+        /// </summary>
         public class EvaluateContractCommand : IRequest<IResult>
         {
             /// <summary>
@@ -51,6 +55,9 @@ namespace LobbyWars.API.Features.Commands
             }
         }
 
+        /// <summary>
+        /// This class handles an EvaluateContractCommand.
+        /// </summary>
         public class EvaluateContractHandler : IRequestHandler<EvaluateContractCommand, IResult>
         {
             
@@ -65,17 +72,34 @@ namespace LobbyWars.API.Features.Commands
                 _logger = logger;
             }
 
+            /// <summary>
+            /// Handle an EvaluateContractCommand.
+            /// </summary>
+            /// <param name="request">Command for evaluate contract.</param>
+            /// <param name="cancellationToken">Cancellation token.</param>
+            /// <returns>Returns the result of evaluate contract.</returns>
             public async Task<IResult> Handle(EvaluateContractCommand request, CancellationToken cancellationToken)
             {
-                var result = _validator.Validate(request);
-                if (!result.IsValid)
-                    return Results.ValidationProblem(result.GetValidationProblems());
+                try
+                {
+                    var result = _validator.Validate(request);
+                    if (!result.IsValid)
+                        return Results.ValidationProblem(result.GetValidationProblems());
 
-                var response = await _service.EvaluateContracts(request.ToDomainEntity());
-                return Results.Ok(response);
+                    var response = await _service.EvaluateContracts(request.ToDomainEntity());
+                    return Results.Ok(response);
+                }
+                catch(Exception ex)
+                {
+                    _logger.LogError($"Error EvaluateContract:{ex.Message}", ex);
+                    throw;
+                }
             }
         }
 
+        /// <summary>
+        /// This class validates an EvaluateContractCommand.
+        /// </summary>
         public class CreateProductValidator : AbstractValidator<EvaluateContractCommand>
         {
             public CreateProductValidator()

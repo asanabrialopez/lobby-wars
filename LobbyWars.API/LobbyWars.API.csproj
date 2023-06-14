@@ -28,8 +28,4 @@
     <ProjectReference Include="..\LobbyWars.Infrastructure\LobbyWars.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Queries\" />
-  </ItemGroup>
-
 </Project>

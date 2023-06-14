@@ -1,19 +1,17 @@
 ﻿using Carter;
 using Carter.ModelBinding;
 using FluentValidation;
-using LobbyWars.API.Features.EventHandler;
 using LobbyWars.Application.DTOs;
 using LobbyWars.Application.Services;
 using LobbyWars.Domain.Entities;
 using LobbyWars.Domain.Events;
 using MediatR;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System.Diagnostics.Contracts;
 
-namespace LobbyWars.API.Features.Commands
+namespace LobbyWars.API.Commands
 {
+    /// <summary>
+    /// This class is a module that implements ICarterModule to provide routes for login.
+    /// </summary>
     public class Login : ICarterModule
     {
         public void AddRoutes(IEndpointRouteBuilder app)
@@ -29,6 +27,9 @@ namespace LobbyWars.API.Features.Commands
             .ProducesValidationProblem();
         }
 
+        /// <summary>
+        /// This class represents a command for logging in a user.
+        /// </summary>
         public class LoginCommand : IRequest<IResult>
         {
             /// <summary>
@@ -51,11 +52,14 @@ namespace LobbyWars.API.Features.Commands
             }
         }
 
+        /// <summary>
+        /// This class handles a LoginCommand.
+        /// </summary>
         public class LoginHandler : IRequestHandler<LoginCommand, IResult>
         {
-            
+
             private readonly IValidator<LoginCommand> _validator;
-            private readonly IUserService _service;
+            private readonly IUserService _service; 
             private readonly ILogger<LoginHandler> _logger;
             private readonly IMediator _mediator;
 
@@ -69,17 +73,29 @@ namespace LobbyWars.API.Features.Commands
 
             public async Task<IResult> Handle(LoginCommand request, CancellationToken cancellationToken)
             {
-                var result = _validator.Validate(request);
-                if (!result.IsValid)
-                    return Results.ValidationProblem(result.GetValidationProblems());
+                try
+                {
+                    var result = _validator.Validate(request);
+                    if (!result.IsValid)
+                        return Results.ValidationProblem(result.GetValidationProblems());
 
-                var response = await _service.Login(request.Email, request.Password);
+                    var response = await _service.Login(request.Email, request.Password);
 
-                await _mediator.Publish(new LoginEvent(request.ToDomainEntity()));
-                return Results.Ok(response);
+                    await _mediator.Publish(new LoginEvent(request.ToDomainEntity()));
+                    return Results.Ok(response);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError($"Error Login:{ex.Message}", ex);
+                    throw;
+                }
+
             }
         }
 
+        /// <summary>
+        /// This class validates a LoginCommand.
+        /// </summary>
         public class CreateProductValidator : AbstractValidator<LoginCommand>
         {
             public CreateProductValidator()

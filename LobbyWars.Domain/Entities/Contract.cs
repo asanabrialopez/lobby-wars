@@ -1,13 +1,6 @@
-﻿using LobbyWars.Domain.Events;
-using LobbyWars.SharedKernel.Constants;
-using System;
-using System.Collections.Generic;
+﻿using LobbyWars.SharedKernel.Constants;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace LobbyWars.Domain.Entities
 {
@@ -32,13 +25,15 @@ namespace LobbyWars.Domain.Entities
         public int GetScorePlaintiff => CalculatePoints(PlaintiffSignatures);
         public int GetScoreDefendant => CalculatePoints(DefendantSignatures);
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, Column(Order = 0)]
         public int Id { get; set; }
 
         /// <summary>
         /// Determines the winner of a contract based on the points of the plaintiff's and defendant's signatures.
         /// </summary>
         /// <param name="contract">Contract of plaintiff and defendant.</param>
-        /// <returns>A string indicating the winner ("Plaintiff", "Defendant", or "Draw").</returns>
+        /// <returns>A string indicating the winner ("Plaintiff", "Defendant", or "Tie").</returns>
         public async Task<string?> DetermineWinner()
         {
             string? winner = null;
@@ -54,6 +49,10 @@ namespace LobbyWars.Domain.Entities
             return winner;
         }
 
+        /// <summary>
+        /// This asynchronous method determines if there are any missing signatures in the contract.
+        /// </summary>
+        /// <returns>Return the result, which will be either the calculated sign or null if no signatures are missing.</returns>
         public async Task<char?> DetermineMissingSignatures()
         {
             char? result = null;
@@ -66,6 +65,10 @@ namespace LobbyWars.Domain.Entities
             return result;
         }
 
+        /// <summary>
+        /// This method calculates the missing signatures in the contract.
+        /// </summary>
+        /// <returns>Return the calculated missing signature.</returns>
         private char? CalculateSigns()
         {
             char? result = null;

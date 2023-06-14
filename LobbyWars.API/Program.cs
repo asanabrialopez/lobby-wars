@@ -1,18 +1,9 @@
 using Carter;
 using FluentValidation;
-using LobbyWars.API;
 using LobbyWars.API.Extensions;
 using LobbyWars.Infrastructure.Database;
-using LobbyWars.SharedKernel;
-using MediatR;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using Serilog;
-using System.Configuration;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCarter();

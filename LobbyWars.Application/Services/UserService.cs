@@ -1,13 +1,7 @@
 ﻿using LobbyWars.Application.DTOs;
-using LobbyWars.Domain.Entities;
 using LobbyWars.Domain.Repositories;
 using LobbyWars.SharedKernel;
 using LobbyWars.SharedKernel.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LobbyWars.Application.Services
 {
@@ -38,6 +32,11 @@ namespace LobbyWars.Application.Services
             }
 
             return new LoginResponseDto(accessToken);
+        }
+
+        public async Task SetLastLogin(string email)
+        {
+            _userRepository.SetLastLogin(email);
         }
     }
 }

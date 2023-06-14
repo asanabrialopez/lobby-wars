@@ -1,27 +1,33 @@
-﻿using LobbyWars.API.Features.Commands;
+﻿using LobbyWars.API.Commands;
+using LobbyWars.API.Features.Commands;
 using LobbyWars.Application.DTOs;
 using LobbyWars.SharedKernel.Constants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LobbyWars.Tests.IntegrationTests
 {
     public class EvaluateContractsApiTest
     {
         private HttpClient _httpClient;
-        private const string REQUEST_URI = "api/contract";
+        private const string REQUEST_URI_CONTRACT = "api/contract";
+        private const string REQUEST_URI_USER = "api/user";
 
         [SetUp]
         public void Setub()
         {
             _httpClient = new WebApplicationFactory<Program>().CreateClient();
+
+            var value = new Login.LoginCommand();
+            value.Email = "king@lobbywars.com";
+            value.Password = "king";
+            var postResponse = _httpClient.PostAsJsonAsync(REQUEST_URI_USER, value).Result;
+            var result = postResponse.Content.ReadFromJsonAsync<LoginResponseDto>().Result;
+
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", result.AccessToken);
         }
 
         [Test]
@@ -31,7 +37,7 @@ namespace LobbyWars.Tests.IntegrationTests
             value.DefendantSignatures = "KNV";
             value.PlaintiffSignatures = "NNV";
 
-            var postResponse = _httpClient.PostAsJsonAsync(REQUEST_URI, value).Result;
+            var postResponse = _httpClient.PostAsJsonAsync(REQUEST_URI_CONTRACT, value).Result;
 
             // Assert
             postResponse.EnsureSuccessStatusCode();
@@ -46,7 +52,7 @@ namespace LobbyWars.Tests.IntegrationTests
             value.DefendantSignatures = "NNV";
             value.PlaintiffSignatures = "KNV";
 
-            var postResponse = _httpClient.PostAsJsonAsync(REQUEST_URI, value).Result;
+            var postResponse = _httpClient.PostAsJsonAsync(REQUEST_URI_CONTRACT, value).Result;
 
             // Assert
             postResponse.EnsureSuccessStatusCode();
@@ -61,7 +67,7 @@ namespace LobbyWars.Tests.IntegrationTests
             value.DefendantSignatures = "KNV";
             value.PlaintiffSignatures = "KNV";
 
-            var postResponse = _httpClient.PostAsJsonAsync(REQUEST_URI, value).Result;
+            var postResponse = _httpClient.PostAsJsonAsync(REQUEST_URI_CONTRACT, value).Result;
 
             // Assert
             postResponse.EnsureSuccessStatusCode();
@@ -78,7 +84,7 @@ namespace LobbyWars.Tests.IntegrationTests
             value.DefendantSignatures = "NVV";
             value.PlaintiffSignatures = "N#V";
 
-            var postResponse = _httpClient.PostAsJsonAsync(REQUEST_URI, value).Result;
+            var postResponse = _httpClient.PostAsJsonAsync(REQUEST_URI_CONTRACT, value).Result;
 
             // Assert
             postResponse.EnsureSuccessStatusCode();
@@ -93,7 +99,7 @@ namespace LobbyWars.Tests.IntegrationTests
             value.DefendantSignatures = "NVV";
             value.PlaintiffSignatures = "V#V";
 
-            var postResponse = _httpClient.PostAsJsonAsync(REQUEST_URI, value).Result;
+            var postResponse = _httpClient.PostAsJsonAsync(REQUEST_URI_CONTRACT, value).Result;
 
             // Assert
             postResponse.EnsureSuccessStatusCode();
@@ -108,7 +114,7 @@ namespace LobbyWars.Tests.IntegrationTests
             value.DefendantSignatures = "NVV";
             value.PlaintiffSignatures = "NN#";
 
-            var postResponse = _httpClient.PostAsJsonAsync(REQUEST_URI, value).Result;
+            var postResponse = _httpClient.PostAsJsonAsync(REQUEST_URI_CONTRACT, value).Result;
 
             // Assert
             postResponse.EnsureSuccessStatusCode();
@@ -123,7 +129,7 @@ namespace LobbyWars.Tests.IntegrationTests
             value.DefendantSignatures = "NVV";
             value.PlaintiffSignatures = "KN#";
 
-            var postResponse = _httpClient.PostAsJsonAsync(REQUEST_URI, value).Result;
+            var postResponse = _httpClient.PostAsJsonAsync(REQUEST_URI_CONTRACT, value).Result;
 
             // Assert
             postResponse.EnsureSuccessStatusCode();
@@ -140,7 +146,7 @@ namespace LobbyWars.Tests.IntegrationTests
             value.DefendantSignatures = "";
             value.PlaintiffSignatures = "";
 
-            var postResponse = _httpClient.PostAsJsonAsync(REQUEST_URI, value).Result;
+            var postResponse = _httpClient.PostAsJsonAsync(REQUEST_URI_CONTRACT, value).Result;
 
             // Assert
             Assert.AreEqual(postResponse.StatusCode, HttpStatusCode.BadRequest);
@@ -153,7 +159,7 @@ namespace LobbyWars.Tests.IntegrationTests
             value.DefendantSignatures = " ";
             value.PlaintiffSignatures = " ";
 
-            var postResponse = _httpClient.PostAsJsonAsync(REQUEST_URI, value).Result;
+            var postResponse = _httpClient.PostAsJsonAsync(REQUEST_URI_CONTRACT, value).Result;
 
             // Assert
             Assert.AreEqual(postResponse.StatusCode, HttpStatusCode.BadRequest);
@@ -166,7 +172,7 @@ namespace LobbyWars.Tests.IntegrationTests
             value.DefendantSignatures = "KNN";
             value.PlaintiffSignatures = "KN";
 
-            var postResponse = _httpClient.PostAsJsonAsync(REQUEST_URI, value).Result;
+            var postResponse = _httpClient.PostAsJsonAsync(REQUEST_URI_CONTRACT, value).Result;
 
             // Assert
             Assert.AreEqual(postResponse.StatusCode, HttpStatusCode.BadRequest);
