@@ -1,25 +1,26 @@
-﻿using LobbyWars.SharedKernel.Constants;
-using LobbyWars.Application.Services;
+﻿using LobbyWars.API.Features.Contract.Application;
+using LobbyWars.API.Features.Contract.Domain;
+using LobbyWars.SharedKernel.Constants;
 
 namespace LobbyWars.Tests.UnitTests
 {
     public class ContractModuleTests
     {
-        private IContractService _service;
+        private IEvaluateContractService _evaluateContract;
 
         [SetUp]
         public void Setub()
         {
-            _service = new ContractService();
+            _evaluateContract = new EvaluateContractService();
         }
 
 
         [Test]
         public void TestContractWinnerDetermination_WhenContract1Wins()
         {
-            var value = new Domain.Entities.Contract("NNV", "KNV");
+            var value = new ContractEntity("NNV", "KNV");
 
-            var result = _service.EvaluateContracts(value).Result;
+            var result = _evaluateContract.Invoke(value).Result;
 
             // Assert
             Assert.AreEqual(ContractConstants.DEFENDANT, result.Winner);
@@ -28,9 +29,9 @@ namespace LobbyWars.Tests.UnitTests
         [Test]
         public void TestContractWinnerDetermination_WhenContract2Wins()
         {
-            var value = new Domain.Entities.Contract("KNV", "NNV");
+            var value = new ContractEntity("KNV", "NNV");
 
-            var result = _service.EvaluateContracts(value).Result;
+            var result = _evaluateContract.Invoke(value).Result;
 
             // Assert
             Assert.AreEqual(ContractConstants.PLAINTIFF, result.Winner);
@@ -39,9 +40,9 @@ namespace LobbyWars.Tests.UnitTests
         [Test]
         public void TestContractWinnerDetermination_WhenTie()
         {
-            var value = new Domain.Entities.Contract("KNV", "KNV");
+            var value = new ContractEntity("KNV", "KNV");
 
-            var result = _service.EvaluateContracts(value).Result;
+            var result = _evaluateContract.Invoke(value).Result;
 
             // Assert
             // The method returns null in case of a tie.
@@ -51,9 +52,9 @@ namespace LobbyWars.Tests.UnitTests
         [Test]
         public void TestMinimumSignatureDetermination_WhenNotaryIsRequired()
         {
-            var value = new Domain.Entities.Contract("N#V", "NVV");
+            var value = new ContractEntity("N#V", "NVV");
 
-            var result = _service.EvaluateContracts(value).Result;
+            var result = _evaluateContract.Invoke(value).Result;
 
             // Assert
             Assert.AreEqual(ContractConstants.NOTARY, result.MissingSignatures);
@@ -62,9 +63,9 @@ namespace LobbyWars.Tests.UnitTests
         [Test]
         public void TestMinimumSignatureDetermination_WhenKingIsRequired()
         {
-            var value = new Domain.Entities.Contract("V#V", "NVV");
+            var value = new ContractEntity("V#V", "NVV");
 
-            var result = _service.EvaluateContracts(value).Result;
+            var result = _evaluateContract.Invoke(value).Result;
 
             // Assert
             Assert.AreEqual(ContractConstants.KING, result.MissingSignatures);
@@ -73,9 +74,9 @@ namespace LobbyWars.Tests.UnitTests
         [Test]
         public void TestMinimumSignatureDetermination_WhenValidatorIsRequired()
         {
-            var value = new Domain.Entities.Contract("NN#", "NVV");
+            var value = new ContractEntity("NN#", "NVV");
 
-            var result = _service.EvaluateContracts(value).Result;
+            var result = _evaluateContract.Invoke(value).Result;
 
             // Assert
             Assert.AreEqual(ContractConstants.VALIDATOR, result.MissingSignatures);
@@ -84,9 +85,9 @@ namespace LobbyWars.Tests.UnitTests
         [Test]
         public void TestMinimumSignatureDetermination_WhenNoSignatureIsRequired()
         {
-            var value = new Domain.Entities.Contract("KN#", "NVV");
+            var value = new ContractEntity("KN#", "NVV");
 
-            var result = _service.EvaluateContracts(value).Result;
+            var result = _evaluateContract.Invoke(value).Result;
 
             // Assert
             // The method returns null if no signature is required.

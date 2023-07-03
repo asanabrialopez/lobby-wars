@@ -1,7 +1,7 @@
 using Carter;
 using FluentValidation;
 using LobbyWars.API.Extensions;
-using LobbyWars.Infrastructure.Database;
+using LobbyWars.Database;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 

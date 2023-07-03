@@ -5,15 +5,9 @@ VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LobbyWars.API", "LobbyWars.API\LobbyWars.API.csproj", "{22D58B29-08E5-48CF-99F1-AC5E08CFA8FD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LobbyWars.Application", "LobbyWars.Application\LobbyWars.Application.csproj", "{D98419BB-7D3B-49E8-8B84-7FA622A51CFC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LobbyWars.Domain", "LobbyWars.Domain\LobbyWars.Domain.csproj", "{5BA5A15E-0A94-415B-9A29-0771A98DB858}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LobbyWars.Tests", "LobbyWars.Tests\LobbyWars.Tests.csproj", "{249AD468-E668-409B-BE98-265090D0BE6A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LobbyWars.SharedKernel", "LobbyWars.SharedKernel\LobbyWars.SharedKernel.csproj", "{935371C6-01F1-4C80-8B4B-AE2EF823E8A9}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LobbyWars.Infrastructure", "LobbyWars.Infrastructure\LobbyWars.Infrastructure.csproj", "{C875BF71-2387-43C1-BF0D-1E77E8688EB4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,14 +19,6 @@ Global
 		{22D58B29-08E5-48CF-99F1-AC5E08CFA8FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22D58B29-08E5-48CF-99F1-AC5E08CFA8FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22D58B29-08E5-48CF-99F1-AC5E08CFA8FD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D98419BB-7D3B-49E8-8B84-7FA622A51CFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D98419BB-7D3B-49E8-8B84-7FA622A51CFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D98419BB-7D3B-49E8-8B84-7FA622A51CFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D98419BB-7D3B-49E8-8B84-7FA622A51CFC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5BA5A15E-0A94-415B-9A29-0771A98DB858}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5BA5A15E-0A94-415B-9A29-0771A98DB858}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5BA5A15E-0A94-415B-9A29-0771A98DB858}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5BA5A15E-0A94-415B-9A29-0771A98DB858}.Release|Any CPU.Build.0 = Release|Any CPU
 		{249AD468-E668-409B-BE98-265090D0BE6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{249AD468-E668-409B-BE98-265090D0BE6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{249AD468-E668-409B-BE98-265090D0BE6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -41,10 +27,6 @@ Global
 		{935371C6-01F1-4C80-8B4B-AE2EF823E8A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{935371C6-01F1-4C80-8B4B-AE2EF823E8A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{935371C6-01F1-4C80-8B4B-AE2EF823E8A9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C875BF71-2387-43C1-BF0D-1E77E8688EB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C875BF71-2387-43C1-BF0D-1E77E8688EB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C875BF71-2387-43C1-BF0D-1E77E8688EB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C875BF71-2387-43C1-BF0D-1E77E8688EB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -37,7 +37,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LobbyWars.API\LobbyWars.API.csproj" />
-    <ProjectReference Include="..\LobbyWars.Application\LobbyWars.Application.csproj" />
+    <ProjectReference Include="..\LobbyWars.SharedKernel\LobbyWars.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>

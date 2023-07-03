@@ -1,6 +1,6 @@
-﻿using LobbyWars.Application.Services;
+﻿using LobbyWars.API.Features.User.Application.Login;
+using LobbyWars.Database;
 using LobbyWars.Domain.Repositories;
-using LobbyWars.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -8,7 +8,7 @@ namespace LobbyWars.Tests.UnitTests
 {
     internal class LoginAppTest
     {
-        private IUserService _service;
+        private ILoginService _login;
 
         [SetUp]
         public void Setub()
@@ -23,7 +23,7 @@ namespace LobbyWars.Tests.UnitTests
                .Options;
 
             var appSettings = new SharedKernel.AppSettingsProvider(config);
-            _service = new UserService(
+            _login = new LoginService(
                 repository: new UserRepository(new AppDbContext(options), appSettings),
                 appSettings: appSettings);
         }
@@ -32,7 +32,7 @@ namespace LobbyWars.Tests.UnitTests
         [Test]
         public void TestContractLogin_Success()
         {
-            var result = _service.Login("king@lobbywars.com", "king").Result;
+            var result = _login.Invoke("king@lobbywars.com", "king").Result;
 
             // Assert
             Assert.IsNotNull(result.AccessToken);
@@ -41,7 +41,7 @@ namespace LobbyWars.Tests.UnitTests
         [Test]
         public void TestContractLogin_Fail()
         {
-            var result = _service.Login("test@lobbywars.com", "test").Result;
+            var result = _login.Invoke("test@lobbywars.com", "test").Result;
 
             // Assert
             Assert.Null(result.AccessToken);

@@ -1,6 +1,7 @@
-﻿using LobbyWars.API.Commands;
-using LobbyWars.API.Features.Commands;
-using LobbyWars.Application.DTOs;
+﻿using LobbyWars.API.Features.Contract.Api;
+using LobbyWars.API.Features.Contract.Application;
+using LobbyWars.API.Features.User.Application.Login;
+using LobbyWars.API.Modules;
 using LobbyWars.SharedKernel.Constants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -21,7 +22,7 @@ namespace LobbyWars.Tests.IntegrationTests
         {
             _httpClient = new WebApplicationFactory<Program>().CreateClient();
 
-            var value = new Login.LoginCommand();
+            var value = new LoginCommand();
             value.Email = "king@lobbywars.com";
             value.Password = "king";
             var postResponse = _httpClient.PostAsJsonAsync(REQUEST_URI_USER, value).Result;
@@ -33,7 +34,7 @@ namespace LobbyWars.Tests.IntegrationTests
         [Test]
         public void TestContractWinnerDetermination_WhenContract1Wins()
         {
-            var value = new EvaluateContracts.EvaluateContractCommand();
+            var value = new EvaluateContractCommand();
             value.DefendantSignatures = "KNV";
             value.PlaintiffSignatures = "NNV";
 
@@ -48,7 +49,7 @@ namespace LobbyWars.Tests.IntegrationTests
         [Test]
         public void TestContractWinnerDetermination_WhenContract2Wins()
         {
-            var value = new EvaluateContracts.EvaluateContractCommand();
+            var value = new EvaluateContractCommand();
             value.DefendantSignatures = "NNV";
             value.PlaintiffSignatures = "KNV";
 
@@ -63,7 +64,7 @@ namespace LobbyWars.Tests.IntegrationTests
         [Test]
         public void TestContractWinnerDetermination_WhenTie()
         {
-            var value = new EvaluateContracts.EvaluateContractCommand();
+            var value = new EvaluateContractCommand();
             value.DefendantSignatures = "KNV";
             value.PlaintiffSignatures = "KNV";
 
@@ -80,7 +81,7 @@ namespace LobbyWars.Tests.IntegrationTests
         [Test]
         public void TestMinimumSignatureDetermination_WhenNotaryIsRequired()
         {
-            var value = new EvaluateContracts.EvaluateContractCommand();
+            var value = new EvaluateContractCommand();
             value.DefendantSignatures = "NVV";
             value.PlaintiffSignatures = "N#V";
 
@@ -95,7 +96,7 @@ namespace LobbyWars.Tests.IntegrationTests
         [Test]
         public void TestMinimumSignatureDetermination_WhenKingIsRequired()
         {
-            var value = new EvaluateContracts.EvaluateContractCommand();
+            var value = new EvaluateContractCommand();
             value.DefendantSignatures = "NVV";
             value.PlaintiffSignatures = "V#V";
 
@@ -110,7 +111,7 @@ namespace LobbyWars.Tests.IntegrationTests
         [Test]
         public void TestMinimumSignatureDetermination_WhenValidatorIsRequired()
         {
-            var value = new EvaluateContracts.EvaluateContractCommand();
+            var value = new EvaluateContractCommand();
             value.DefendantSignatures = "NVV";
             value.PlaintiffSignatures = "NN#";
 
@@ -125,7 +126,7 @@ namespace LobbyWars.Tests.IntegrationTests
         [Test]
         public void TestMinimumSignatureDetermination_WhenNoSignatureIsRequired()
         {
-            var value = new EvaluateContracts.EvaluateContractCommand();
+            var value = new EvaluateContractCommand();
             value.DefendantSignatures = "NVV";
             value.PlaintiffSignatures = "KN#";
 
@@ -142,7 +143,7 @@ namespace LobbyWars.Tests.IntegrationTests
         [Test]
         public void TestMinimumSignatureDetermination_WhenUnknownContract()
         {
-            var value = new EvaluateContracts.EvaluateContractCommand();
+            var value = new EvaluateContractCommand();
             value.DefendantSignatures = "";
             value.PlaintiffSignatures = "";
 
@@ -155,7 +156,7 @@ namespace LobbyWars.Tests.IntegrationTests
         [Test]
         public void TestMinimumSignatureDetermination_WhenWhitespaceContract()
         {
-            var value = new EvaluateContracts.EvaluateContractCommand();
+            var value = new EvaluateContractCommand();
             value.DefendantSignatures = " ";
             value.PlaintiffSignatures = " ";
 
@@ -168,7 +169,7 @@ namespace LobbyWars.Tests.IntegrationTests
         [Test]
         public void TestMinimumSignatureDetermination_WhenMissingSign()
         {
-            var value = new EvaluateContracts.EvaluateContractCommand();
+            var value = new EvaluateContractCommand();
             value.DefendantSignatures = "KNN";
             value.PlaintiffSignatures = "KN";
 

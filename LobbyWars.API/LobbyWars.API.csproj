@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Carter" Version="7.1.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.2" />
+    <PackageReference Include="MediatR" Version="12.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.5" />
@@ -23,9 +24,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LobbyWars.Application\LobbyWars.Application.csproj" />
-    <ProjectReference Include="..\LobbyWars.Domain\LobbyWars.Domain.csproj" />
-    <ProjectReference Include="..\LobbyWars.Infrastructure\LobbyWars.Infrastructure.csproj" />
+    <Folder Include="Features\Contract\Intrastructure\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LobbyWars.SharedKernel\LobbyWars.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>
