@@ -35,7 +35,7 @@ namespace LobbyWars.Tests.UnitTests
             var result = _login.Invoke("king@lobbywars.com", "king").Result;
 
             // Assert
-            Assert.IsNotNull(result.AccessToken);
+            Assert.That(result.AccessToken, Is.Not.Null);
         }
 
         [Test]
@@ -44,7 +44,7 @@ namespace LobbyWars.Tests.UnitTests
             var result = _login.Invoke("test@lobbywars.com", "test").Result;
 
             // Assert
-            Assert.Null(result.AccessToken);
+            Assert.That(result.AccessToken, Is.Null);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace LobbyWars.Tests.UnitTests
             var result = _evaluateContract.Invoke(value).Result;
 
             // Assert
-            Assert.AreEqual(ContractConstants.DEFENDANT, result.Winner);
+            Assert.That(ContractConstants.DEFENDANT, Is.EqualTo(result.Winner));
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace LobbyWars.Tests.UnitTests
             var result = _evaluateContract.Invoke(value).Result;
 
             // Assert
-            Assert.AreEqual(ContractConstants.PLAINTIFF, result.Winner);
+            Assert.That(ContractConstants.PLAINTIFF, Is.EqualTo(result.Winner));
         }
 
         [Test]
@@ -46,7 +46,7 @@ namespace LobbyWars.Tests.UnitTests
 
             // Assert
             // The method returns null in case of a tie.
-            Assert.Null(result.Winner);
+            Assert.That(result.Winner, Is.Null);
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace LobbyWars.Tests.UnitTests
             var result = _evaluateContract.Invoke(value).Result;
 
             // Assert
-            Assert.AreEqual(ContractConstants.NOTARY, result.MissingSignatures);
+            Assert.That(ContractConstants.NOTARY, Is.EqualTo(result.MissingSignatures));
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace LobbyWars.Tests.UnitTests
             var result = _evaluateContract.Invoke(value).Result;
 
             // Assert
-            Assert.AreEqual(ContractConstants.KING, result.MissingSignatures);
+            Assert.That(ContractConstants.KING, Is.EqualTo(result.MissingSignatures));
         }
 
         [Test]
@@ -79,7 +79,7 @@ namespace LobbyWars.Tests.UnitTests
             var result = _evaluateContract.Invoke(value).Result;
 
             // Assert
-            Assert.AreEqual(ContractConstants.VALIDATOR, result.MissingSignatures);
+            Assert.That(ContractConstants.VALIDATOR, Is.EqualTo(result.MissingSignatures));
         }
 
         [Test]
@@ -91,7 +91,7 @@ namespace LobbyWars.Tests.UnitTests
 
             // Assert
             // The method returns null if no signature is required.
-            Assert.Null(result.MissingSignatures);
+            Assert.That(result.MissingSignatures, Is.Null);
         }
     }
 }
