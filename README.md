@@ -3,7 +3,7 @@ Technical test with the following requirements:
 
 - Hexagonal architecture
 - Minimal API
-- .NET 7
+- .NET 8
 - Vertical slicing
 
 ## Description of test
